@@ -1,7 +1,9 @@
 import file_tasks
+import seminar
 
-# def test_task1():
-#     assert task1(0) == 1
+
+def test_task1():
+    assert seminar.task1(['apple', 'banana', 'aherre', 'a', 'foasf', 'lowrgn4334i80gvfdn', 'a094ngne', 'fomoi320md']) == 1
 
 
 def test_task2():
