@@ -5,6 +5,10 @@
 
 3) Отсортировать список кортежей по пследнему элементу из каждого кортежа
 
+4) Напишите функцию fib(n), возвращающую n-е число Фибоначчи.
+
+5) Напишите функцию is_prime(n), проверяющую простое ли число. Если число простое, функция должна вернуть True,
+иначе False (логическое значение, не строку!).
 """
 
 
@@ -27,12 +31,43 @@ def task3(tup_list):
     return sorted(tup_list, key=lambda x: x[-1])
 
 
+def fib(n):
+    list_fib_num = [0, 1]
+    for i in range(2, n + 1):
+        list_fib_num.append(list_fib_num[i - 1] + list_fib_num[i - 2])
+    return list_fib_num[-1]
+
+
+def is_prime(n):
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+
+def is_prime_modern(n):
+    if n == 2:
+        return [True, True, True]
+    else:
+        list_prime_num = is_prime_modern(n - 1)
+        for i in range(2, len(list_prime_num)):
+            if list_prime_num[i] and n % i == 0:
+                list_prime_num.append(False)
+                return list_prime_num
+    list_prime_num.append(True)
+    return list_prime_num
+
 # ============================================     MAIN     ===========================================================
+
 
 def main():
     print(task1(['apple', 'banana', 'aherre', 'a', 'foasf', 'lowrgn4334i80gvfdn', 'a094ngne', 'fomoi320md']))
     print(task2(['apple', 'foasf', 'Xfsd;ljk', 'lowrgn4334i80gvfdn', 'a094ngne', 'fomoi320md', 'x;ojdfdf']))
     print(task3([(1, 3), (4, 3, 0), (9, 5, 1)]))
+    print(fib(12))
+
+    print(is_prime(17))
+    print(is_prime_modern(990)[-1])
 
 
 if __name__ == '__main__':
