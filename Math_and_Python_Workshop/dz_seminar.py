@@ -59,7 +59,21 @@ def front_x(words):
     tmp_list += sorted([el for el in words if (el and el[0] != 'x') or len(el) == 0])
     return tmp_list
 
+
+def donuts(count):
+    return 'Всего пончиков: ' + (str(count) if count < 10 else 'много')
+
+
+def both_ends(s):
+    return s[:2] + s[-2:] if len(s) > 1 else ''
+
+
+def fix_start(s):
+    # return s[0] + ''.join([lit if lit != s[0] else '*' for lit in s[1:]])
+    return s[0] + s[1:].replace(s[0], '*')    # лучше так
+
 # ============================================     MAIN     ===========================================================
+
 
 plus_infinity = 10000000000
 
@@ -80,6 +94,10 @@ def main():
     print(common([0, 2, 3, 4, 5, 19, 42], [0, 6, 19, 33, 42, 55, 66, 77, 99, 101, 256]))
 
     print(front_x(['mix', 'extra', 'x-files', '', 'xyz', 'xapple', 'apple']))
+
+    print(donuts(8))
+    print(both_ends('ygugh'))
+    print(fix_start('babble'))
 
 
 if __name__ == '__main__':
