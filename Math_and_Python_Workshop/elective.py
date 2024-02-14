@@ -78,6 +78,37 @@ def fi(L0, L1, n):
     for _ in range(0, n - 1):
         L0, L1 = L1, L0 + L1
     return Decimal(L1)/Decimal(L0)
+
+
+def L2n(n):
+    return super_L(n) ** 2 - 2 * (-1) ** n
+def L3n(n):
+    Ln = super_L(n)
+    return Ln ** 3 - 3 * (-1) ** n * Ln
+def L4n(n):
+    Ln = super_L(n)
+    return Ln ** 4 - 4 * (-1) ** n * Ln ** 2 + 2
+def L5n(n):
+    Ln = super_L(n)
+    return Ln ** 5 - 5 * (-1) ** n * Ln ** 3 + 5 * Ln
+
+
+def super_L(n):
+    if n == 0:
+        return 2
+    elif n == 1:
+        return 1
+    elif n % 2 == 0:
+        return L2n(n//2)
+    elif n % 3 == 0:
+        return L3n(n//3)
+    elif n % 4 == 0:
+        return L3n(n//4)
+    elif n % 5 == 0:
+        return L5n(n//5)
+    else:
+        return super_L(n - 1) + super_L(n - 2)
+
 # ============================================     MAIN     ==== =======================================================
 
 
@@ -85,8 +116,8 @@ def main():
     plus_infinity = 10000000000
 
     # kaprekar_loop(103303)
-    print(fi(0, 1, 11))
-
+    # print(fi(0, 1, 11))
+    print(super_L(5**4 * 3**4 * 2**4))
 
 if __name__ == '__main__':
     main()
