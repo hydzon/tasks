@@ -40,7 +40,50 @@ x*y = (100−((100−x)+(100−y)))⋅100+(100−x)⋅(100−y)
 -Неправильных результатов: m
 Примечание. Пары, где числа поменялись местами считаются РАЗНЫМИ.
 
+Напишите функцию wisdom_multiplication(x, y, length_check = True),
+реализующую умножение по схеме мудреца с прошлого шага.
+-Вычитаем из 100 первое и второе число.
+-Складываем результаты шага 1.
+-Вычитаем из 100 результат шага 2.
+-Перемножаем результаты шага 1.
+-Результат шага 3 даёт первые цифры результата, а результат шага 4 даёт последние 2 цифры результата.
+В зависимости от значения аргумента length_check функция проверяет или нет длину результата шага 4 и
+при необходимости дописывает 0 перед ним (если результат всего 1 цифра).
+Функция должна возвращать целое число.
 
+Напишите 2 функцию multiplication_check_list(start=10, stop=99, length_check = True)
+Для проверки всех пар в интервале.
+В зависимости от значения аргумента length_check добавляйте при необходимости 0 при конкатенации.
+multiplication_check_list должна уметь печатать:
+-Правильных результатов: n
+-Неправильных результатов: m
+
+
+7)Реализуйте функцию caesar(text, key, alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), возвращающую зашифрованный текст, работающую только с латинским алфавитом.
+text - исходных текст, который надо зашифровать (или расшифровать)
+key - ключ (сдвиг)
+Ключ может быть отрицательным или больше 26
+Из преобразуемого текста удаляются все пробелы и знаки препинания.
+Зашифрованный текст пишется в верхнем регистре 1 строкой.
+Ваша функция должна корректно работать с любым переданным алфавитом,
+а если алфавит не передан, то использовать английский.
+
+Реализуйте функцию bruteforce(text, alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), которая выводит на печать
+все возможные "расшифровки" исходного текста.
+Если алфавит не передан на вход функции, то считается, что текст на английском
+(считаем, что определение алфавита производит оператор-человек).
+Порядок вывода расшифровок от сдвига "-1" по убыванию (-1, -2, -3...)
+
+
+Реализуйте функцию jarriquez_encryption(text, key, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ', reverse=False),
+возвращающую зашифрованный текст
+text - исходный текст
+key - ключ шифрования (число)
+alphabet - алфавит (по умолчанию английский)
+reverse - признак расшифровки, если находится в значении True, это значит, что функцию надо использовать
+для расшифровки текста, т.к. каждый сдвиг должен быть отрицательным. (по умолчанию False)
+Из преобразуемого текста удаляются все пробелы и знаки препинания.
+Зашифрованный текст пишется в верхнем регистре 1 строкой.
 
 """
 
@@ -174,21 +217,71 @@ def convert(n, from_base=10) -> str:
                   .format(n, from_base, convert_to(n, from_base, i), i))
 
 
-# ============================================    tasks 5-... ==========================================================
+# ============================================    tasks 5-6   ==========================================================
 
 
 def simple_multiplication(x, y) -> int:
     return (100 - ((100 - x) + (100 - y))) * 100 + (100 - x) * (100 - y)
 
 
-def multiplication_check(x, y):
-    return x * y == simple_multiplication(x, y)
+def wisdom_multiplication(x, y, length_check=True):
+    n1 = str(100 - ((100 - x) + (100 - y)))
+    n2 = str((100 - x) * (100 - y))
+    if length_check and len(n2) == 1:
+        n2 = '0' + n2
+    return int(n1 + n2)
 
 
-def multiplication_check_list(start=10, stop=99):
-    result = [multiplication_check(x, y) for x in range(start, stop + 1) for y in range(start, stop + 1)]
+def multiplication_check(x, y, length_check=True):
+    return x * y == wisdom_multiplication(x, y, length_check)
+
+
+def multiplication_check_list(start=10, stop=99, length_check=True):
+    result = [multiplication_check(x, y, length_check) for x in range(start, stop + 1) for y in range(start, stop + 1)]
     print(f'Правильных результатов: {result.count(True)}')
     print(f'Неправильных результатов: {result.count(False)}')
+
+
+# ============================================    tasks 7   ==========================================================
+
+def caesar(text: str, key: int, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+    # alph = alphabet[(key % len(alphabet)):] + alphabet[:(key % len(alphabet))]
+    encrypt_text = ''.join([alphabet[(alphabet.index(ch) + key) % len(alphabet)] for ch in text.upper() if ch in alphabet])
+    # decrypt_text = ''.join([alphabet[alph.index(ch)] for ch in encrypt_text])
+    # print(f'Encrypted:\n{encrypt_text}\nDecrypted back:\n{decrypt_text}')
+    print(f'Encrypted:\n{encrypt_text}')
+    bruteforce(encrypt_text, alphabet)
+
+
+def bruteforce(text, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+    print('Bruteforce:')
+    for i in range(1, len(alphabet)):
+        print(''.join([alphabet[(alphabet.index(ch) - i) % len(alphabet)] for ch in text]))
+
+
+def jarriquez_encryption(text, key, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ', reverse=False):
+        encrypt_text, decrypt_text = '', ''
+        key = str(key)
+        key_ind = 0
+        for char in text.upper():
+            if key_ind > len(key) - 1:
+                key_ind = 0
+            if char in alphabet:
+                if reverse:
+                    decrypt_text += alphabet[(alphabet.index(char) - int(key[key_ind])) % len(alphabet)]
+                else:
+                    encrypt_text += alphabet[(alphabet.index(char) + int(key[key_ind])) % len(alphabet)]
+                key_ind += 1
+        return decrypt_text
+        # print(f'Decrypted:\n{decrypt_text}' if reverse else f'Encrypted:\n{encrypt_text}')
+
+
+def bruteforce_jarriquez(text, alphabet='АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'):
+    for i in range(1000, 1000000):
+        dec_string = jarriquez_encryption(text, i, alphabet, reverse=True)
+        if dec_string.count('алмаз'.upper()) or dec_string.count('Дакоста'.upper()):
+            print(f'Ключ: {i}, Фраза: {dec_string}')
+    print('Перебор завершен.')
 
 
 # ============================================     MAIN     ============================================================
@@ -201,9 +294,15 @@ def main():
     # print(fi(0, 1, 11))
     # print(super_L(5**4 * 3**4 * 2**4))
     # print(kaprekar(218400870420))
-    # print(multiplication_check(96, 97))
-    multiplication_check_list()
-
+    # print(simple_multiplication(99, 91))
+    # multiplication_check_list()
+    # caesar('BQQMFZ', 0)
+    # jarriquez_encryption('Вы судья Жаррикез из романа Жюля Верна "Жангада".', 1020, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ')
+    # crypted_text = 'ТЛБЛДУЭППТКЛФЧУВНУПБКЗИХТЛТТЫХНЛОИНУВЖММИНПФНПШОКЧЛЕРНТФНАХЖИДМЯКЛТУБЖИУЕЖЕАХЛГЩЕЕЪУВНГАХИ
+    # ЯШПЙАОЦЦПВТЛБФТТИИНДИДНЧЮОНЯОФВТЕАТФУШБЛРЮЮЧЖДРУУШГЕХУРПЧЕУВАЭУОЙБДБНОЛСКЦБСАОЦЦПВИШЮТППЦЧНЖОИНШВРЗЕЗК
+    # ЗСБЮНЙРКПСЪЖФФШНЦЗРСЭШЦПЖСЙНГЭФФВЫМЖИЛРОЩСЗЮЙФШФДЖОИЗТРМООЙБНФГОЩЧФЖООКОФВЙСЭФЖУЬХИСЦЖГИЪЖДШПРМЖПУПГЦНВКБНРЕК
+    # ИБШМЦХЙИАМФЛУЬЙИСЗРТЕС'
+    # bruteforce_jarriquez(crypted_text)
 
 if __name__ == '__main__':
     main()
