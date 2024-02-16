@@ -1,13 +1,13 @@
 """
-1) функции на примере постоянной Капрекара.
+1) Напишите функцию на примере постоянной Капрекара.
 Для любого 3, 4 или 6-значного числа n, в котором не все цифры одинаковы.
 
-2)Напишите функцию luka(L0, L1, n), которая принимает на вход параметры:
+2) Напишите функцию luka(L0, L1, n), которая принимает на вход параметры:
 L0, L1 - 0й и 1й члены последовательности соответственно
 n - номер числа из последовательности, которое необходимо вернуть
 
 
-3)Напишите функцию fi(L0, L1, n) такую что:
+3) Напишите функцию fi(L0, L1, n) такую что:
 L0, L1 - 0й и 1й члены последовательности Люка соответственно
 n - номер числа из последовательности, которое необходимо вернуть
 Возвращаемое значение - это отношение 2 членов последовательности: Ln/Ln−1
@@ -26,7 +26,7 @@ False, если число НЕ является Числом Капрекара
 основанием исходной и будущей систем отстчёта.
 
 
-6)Напишите функцию simple_multiplication(x, y), реализующую умножение по схеме мудреца с прошлого шага:
+6) Напишите функцию simple_multiplication(x, y), реализующую умножение по схеме мудреца с прошлого шага:
 x*y = (100−((100−x)+(100−y)))⋅100+(100−x)⋅(100−y)
 
 Напишите функцию multiplication_check(x, y), которая будет проверять корректность работы методом мудреца
@@ -59,7 +59,7 @@ multiplication_check_list должна уметь печатать:
 -Неправильных результатов: m
 
 
-7)Реализуйте функцию caesar(text, key, alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), возвращающую зашифрованный текст, работающую только с латинским алфавитом.
+7) Реализуйте функцию caesar(text, key, alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), возвращающую зашифрованный текст, работающую только с латинским алфавитом.
 text - исходных текст, который надо зашифровать (или расшифровать)
 key - ключ (сдвиг)
 Ключ может быть отрицательным или больше 26
@@ -85,9 +85,49 @@ reverse - признак расшифровки, если находится в 
 Из преобразуемого текста удаляются все пробелы и знаки препинания.
 Зашифрованный текст пишется в верхнем регистре 1 строкой.
 
+
+Напишите функцию disc_generator(alphabet), которая принимает на вход упорядоченный список (строку),
+а возвращает случайным образом перемешанный (тоже строку).
+
+Создайте функцию jefferson_encryption(text, discs, step, reverse=False), реализующую "цилиндр Джеферсона"
+text - исходный текст
+discs - список из словарей (строк)
+step - сдвиг на которых смещаются символы с помощью алгоритма Цезаря (ключ шифрования для шифра Цезаря)
+reverse - признак расшифровки, если находится в значении True, это значит, что функцию надо использовать
+          для расшифровки текста, т.к. каждый сдвиг должен быть отрицательным. (по умолчанию False)
+
+
+Реализуйте функцию шифрования, которую использовал пират Кидд из рассказа Эдгара Аллана По "Золотой жук".
+Используйте словарь:
+cypher = {'e': '8', 't': ';', 'h': '4', 'o': '‡', 's': ')', 'n': '*', 'a': '5', 'i': '6', 'r': '(', 'f': '1',
+'d': '†', 'l': '0', 'm': '9', 'b': '2', 'y': ':', 'g': '3', 'u': '?', 'v': '¶', 'c': '-', 'p': '.'}
+
+
+8)     ==== Э Н И Г М А  ====
+
+Реализуйте функцию rotor(symbol, n, reverse=False)
+symbol - символ, поступающий для шифрования
+n - номер ротора
+reverse - признак обратного направления, если находится в значении True, это значит, что функцию надо использовать
+в обратном направлении. (по умолчанию False)
+Возвращает строку с зашифрованным символом
+
+
+Реализуйте функцию reflector(symbol, n):
+symbol - символ, поступающий для шифрования
+n - номер отражателя
+
+
+Реализуйте функцию enigma(text, ref, rot1, shift1, rot2, shift2, rot3, shift3) с поворачивающимися роторами,
+как они описаны на предыдущем шаге.
+text - исходный текст, который необходимо зашифровать
+ref - номер отражателя (согласно задаче https://stepik.org/lesson/283487/step/3)
+rot1, rot2, rot3 - номера роторов (согласно задаче https://stepik.org/lesson/283487/step/2)
+shift1, shift2, shift3 - сдвиги роторов (1, 2 и 3, соответственно)
+
+
 """
-
-
+import random
 # ============================================   tasks 1-5  ============================================================
 
 from functools import reduce
@@ -246,12 +286,13 @@ def multiplication_check_list(start=10, stop=99, length_check=True):
 
 def caesar(text: str, key: int, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     # alph = alphabet[(key % len(alphabet)):] + alphabet[:(key % len(alphabet))]
-    encrypt_text = ''.join([alphabet[(alphabet.index(ch) + key) % len(alphabet)] for ch in text.upper() if ch in alphabet])
+    # encrypt_text = ''.join([alphabet[(alphabet.index(ch) + key) % len(alphabet)]
+    # for ch in text.upper() if ch in alphabet])
     # decrypt_text = ''.join([alphabet[alph.index(ch)] for ch in encrypt_text])
     # print(f'Encrypted:\n{encrypt_text}\nDecrypted back:\n{decrypt_text}')
-    print(f'Encrypted:\n{encrypt_text}')
-    bruteforce(encrypt_text, alphabet)
-
+    # print(f'Encrypted:\n{encrypt_text}')
+    # bruteforce(encrypt_text, alphabet)
+    return ''.join([alphabet[(alphabet.index(ch) + key) % len(alphabet)] for ch in text.upper() if ch in alphabet])
 
 def bruteforce(text, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     print('Bruteforce:')
@@ -262,16 +303,16 @@ def bruteforce(text, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
 def jarriquez_encryption(text, key, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ', reverse=False):
         encrypt_text, decrypt_text = '', ''
         key = str(key)
-        key_ind = 0
+        key_index = 0
         for char in text.upper():
-            if key_ind > len(key) - 1:
-                key_ind = 0
+            if key_index > len(key) - 1:
+                key_index = 0
             if char in alphabet:
                 if reverse:
-                    decrypt_text += alphabet[(alphabet.index(char) - int(key[key_ind])) % len(alphabet)]
+                    decrypt_text += alphabet[(alphabet.index(char) - int(key[key_index])) % len(alphabet)]
                 else:
-                    encrypt_text += alphabet[(alphabet.index(char) + int(key[key_ind])) % len(alphabet)]
-                key_ind += 1
+                    encrypt_text += alphabet[(alphabet.index(char) + int(key[key_index])) % len(alphabet)]
+                key_index += 1
         return decrypt_text
         # print(f'Decrypted:\n{decrypt_text}' if reverse else f'Encrypted:\n{encrypt_text}')
 
@@ -284,18 +325,120 @@ def bruteforce_jarriquez(text, alphabet='АБВГДЕЖЗИЙКЛМНОПРСТ�
     print('Перебор завершен.')
 
 
+def disc_generator(alphabet):
+    rand_alph = list(alphabet)
+    random.shuffle(rand_alph)
+    return ''.join(rand_alph)
+
+
+def jefferson_encryption(text, discs, step, reverse=False):
+    encrypt_text, decrypt_text = '', ''
+    discs_index = 0
+    for char in text.upper():
+        if discs_index > len(discs) - 1:
+            discs_index = 0
+        if char in discs[discs_index]:
+            if reverse:
+                decrypt_text += caesar(char, -step, discs[discs_index])
+            else:
+                encrypt_text += caesar(char, step, discs[discs_index])
+            discs_index += 1
+    print(f'Decrypted:\n{decrypt_text}' if reverse else f'Encrypted:\n{encrypt_text}')
+
+
+l1 = ['e', 't', 'h', 'o', 's', 'n', 'a', 'i', 'r', 'f', 'd', 'l', 'm', 'b', 'y', 'g', 'u', 'v', 'c', 'p']
+l2 = ['8', ';', '4', '‡', ')', '*', '5', '6', '(', '1', '†', '0', '9', '2', ':', '3', '?', '¶', '-', '.']
+def kidds_encryption(text, reverse=False):
+    if reverse:
+        return ''.join([l1[l2.index(ch)] for ch in text.lower()])
+    else:
+        return ''.join([l2[l1.index(ch)] for ch in text.lower() if ch in l1])
+
+
+# ============================================    Э Н И Г М А   ========================================================
+
+ROTORS = {
+    0: ('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+    1: ('AELTPHQXRU', 'BKNW', 'CMOY', 'DFG', 'IV', 'JZ', 'S'),
+    2: ('FIXVYOMW', 'CDKLHUP', 'ESZ', 'BJ', 'GR', 'NT', 'A', 'Q'),
+    3: ('ABDHPEJT', 'CFLVMZOYQIRWUKXSG', 'N'),
+    4: ('AEPLIYWCOXMRFZBSTGJQNH', 'DV', 'KU'),
+    5: ('AVOLDRWFIUQ', 'BZKSMNHYC', 'EGTJPX'),
+    6: ('AJQDVLEOZWIYTS', 'CGMNHFUX', 'BPRK'),
+    7: ('ANOUPFRIMBZTLWKSVEGCJYDHXQ'),
+    8: ('AFLSETWUNDHOZVICQ', 'BKJ', 'GXY', 'MPR'),
+    'beta': ('ALBEVFCYODJWUGNMQTZSKPR', 'HIX'),
+    'gamma': ('AFNIRLBSQWVXGUZDKMTPCOYJHE')
+}
+REFLECTORS = {
+    0: (),
+    1: ('AY', 'BR', 'CU', 'DH', 'EQ', 'FS', 'GL', 'IP', 'JX', 'KN', 'MO', 'TZ', 'VW'),
+    2: ('AF', 'BV', 'CP', 'DJ', 'EI', 'GO', 'HY', 'KR', 'LZ', 'MX', 'NW', 'TQ', 'SU'),
+    3: ('AE', 'BN', 'CK', 'DQ', 'FU', 'GY', 'HW', 'IJ', 'LO', 'MP', 'RX', 'SZ', 'TV'),
+    4: ('AR', 'BD', 'CO', 'EJ', 'FN', 'GT', 'HK', 'IV', 'LM', 'PW', 'QZ', 'SX', 'UY')
+}
+
+
+def rotor(symbol, rotor_name, reverse=False):
+    symbol = symbol.upper()
+    if rotor_name:
+        for rotor_word in range(len(ROTORS[rotor_name])):
+            if symbol in ROTORS[rotor_name][rotor_word]:
+                search_word = ROTORS[rotor_name][rotor_word]
+                symbol = search_word[(search_word.index(symbol) - 1) % len(search_word)] if reverse \
+                    else search_word[(search_word.index(symbol) + 1) % len(search_word)]
+                break
+    return symbol
+
+
+def reflector(symbol, n):
+    symbol = symbol.upper()
+    for ref_word in range(len(REFLECTORS[n])):
+        if symbol in REFLECTORS[n][ref_word]:
+            search_word = REFLECTORS[n][ref_word]
+            symbol = search_word[(search_word.index(symbol) - 1) % len(search_word)]
+            break
+    return symbol
+
+
+def encrypted(symbol, ref, rot1, shift1, rot2, shift2, rot3, shift3):
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) + shift3) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot3)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) + (shift2 - shift3)) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot2)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) + (shift1 - shift2)) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot1)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) - shift1) % len(ROTORS[0])]
+    symbol = reflector(symbol, ref)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) + shift1) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot1, reverse=True)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) - (shift1 - shift2)) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot2, reverse=True)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) - (shift2 - shift3)) % len(ROTORS[0])]
+    symbol = rotor(symbol, rot3, reverse=True)
+    symbol = ROTORS[0][(ROTORS[0].index(symbol) - shift3) % len(ROTORS[0])]
+    return symbol
+
+
+def enigma(text, ref, rot1, shift1, rot2, shift2, rot3, shift3):
+    encrypted_text = ''
+    for ch in text.upper():
+        if ch in ROTORS[0]:
+            encrypted_text += encrypted(ch, ref, rot1, shift1, rot2, shift2, rot3, shift3)
+    return encrypted_text
+
+
 # ============================================     MAIN     ============================================================
 
 
 def main():
-    plus_infinity = 10000000000
-
     # kaprekar_loop(103303)
     # print(fi(0, 1, 11))
     # print(super_L(5**4 * 3**4 * 2**4))
     # print(kaprekar(218400870420))
     # print(simple_multiplication(99, 91))
     # multiplication_check_list()
+
     # caesar('BQQMFZ', 0)
     # jarriquez_encryption('Вы судья Жаррикез из романа Жюля Верна "Жангада".', 1020, 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ')
     # crypted_text = 'ТЛБЛДУЭППТКЛФЧУВНУПБКЗИХТЛТТЫХНЛОИНУВЖММИНПФНПШОКЧЛЕРНТФНАХЖИДМЯКЛТУБЖИУЕЖЕАХЛГЩЕЕЪУВНГАХИ
@@ -303,6 +446,19 @@ def main():
     # ЗСБЮНЙРКПСЪЖФФШНЦЗРСЭШЦПЖСЙНГЭФФВЫМЖИЛРОЩСЗЮЙФШФДЖОИЗТРМООЙБНФГОЩЧФЖООКОФВЙСЭФЖУЬХИСЦЖГИЪЖДШПРМЖПУПГЦНВКБНРЕК
     # ИБШМЦХЙИАМФЛУЬЙИСЗРТЕС'
     # bruteforce_jarriquez(crypted_text)
+
+    # print(disc_generator('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+    # discs = [disc_generator('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(6)]
+    # discs = ['QMJZTGFKPWLSBOXNCRYEVHIADU', 'CVMHTPQXZJLWORBDUGEYKNFAIS', 'AMPKIXVFQEWODNZYHBCGSLTUJR',
+    #          'NMPJZSBAQDILKEGOYHRFXTCUVW', 'JHANFBRXVQYTLDCIEOMPUZKWSG', 'ZHJLSWGXQBKAPYIORMCTNVFUED']
+    # jefferson_encryption('Some encripted text', discs, 13, reverse=False)
+    # print(kidds_encryption('ethosnairfdlmbyguvcp'))
+
+    # print(rotor('b', 0, reverse=True))
+    # print(reflector('b', 1))
+    print(enigma('Some encripted text', 1, 1, 1, 2, 2, 3, 1))
+
+
 
 if __name__ == '__main__':
     main()
