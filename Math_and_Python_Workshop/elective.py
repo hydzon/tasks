@@ -420,11 +420,30 @@ def encrypted(symbol, ref, rot1, shift1, rot2, shift2, rot3, shift3):
     return symbol
 
 
+def add_ofset(ofset):
+    return ofset + 1 if ofset < 25 else 0
+
+
 def enigma(text, ref, rot1, shift1, rot2, shift2, rot3, shift3):
     encrypted_text = ''
+    notch_positions = [0, 17, 5, 22]
+    position = [0, shift1, shift2, shift3]
+    rotate_next_step = [False, False, False, False]
     for ch in text.upper():
         if ch in ROTORS[0]:
-            encrypted_text += encrypted(ch, ref, rot1, shift1, rot2, shift2, rot3, shift3)
+
+            position[3] = add_ofset(position[3])
+            if rotate_next_step[3]:
+                position[2] = add_ofset(position[2])
+                rotate_next_step[3] = False
+            if rotate_next_step[2]:
+                position[2] = add_ofset(position[2])
+                position[1] = add_ofset(position[1])
+                rotate_next_step[2] = False
+            rotate_next_step[3] = position[3] == notch_positions[rot3] - 1
+            rotate_next_step[2] = position[2] == notch_positions[rot2] - 1
+
+            encrypted_text += encrypted(ch, ref, rot1, position[1], rot2, position[2], rot3, position[3])
     return encrypted_text
 
 
@@ -456,7 +475,7 @@ def main():
 
     # print(rotor('b', 0, reverse=True))
     # print(reflector('b', 1))
-    print(enigma('Some encripted text', 1, 1, 1, 2, 2, 3, 1))
+    print(enigma('AAAAA AAAAA', 1, 1, 0, 2, 0, 2, 0))
 
 
 
