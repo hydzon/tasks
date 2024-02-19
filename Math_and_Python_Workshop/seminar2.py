@@ -14,6 +14,17 @@ f(x) в точке x=x0
 Функция должна округлять ответ до 3 знака после запятой.
 
 
+3) Напишите функцию list_pull(L), принимающую на вход многомерный список (список списков)
+и возвращающую "вытянутый" список только значений
+
+
+4)Не используя метод deepcopy скопируйте всё содержимое списка L1 в L2.
+
+
+5)Напишите функцию verbing(s), принимающую на вход строку.
+Если длина строки 3 и больше, то добавьте к ней 'ing' в конце
+Если строка уже содержит 'ing', добавьте 'ly'
+Если длина строки меньше 3, верните строку как есть
 
 """
 
@@ -33,6 +44,31 @@ def f2(x):
 def derivative(fun, x0=0):
     dx = 0.00001
     return (fun(x0+dx) - fun(x0)) / dx
+
+
+def list_pull(input_list):
+    s = []
+    for el in input_list:
+        if type(el) is list:
+            s.extend(list_pull(el))
+        else:
+            s.append(el)
+    return s
+
+
+def my_deepcopy(input_list):
+    return [my_deepcopy(el) if isinstance(el, list) else el for el in input_list]
+
+
+def verbing(s: str):
+    if len(s) < 3:
+        return s
+    elif s.endswith('ing'):
+        return s + 'ly'
+    else:
+        return s + 'ing'
+
+
 # ============================================     MAIN     ===========================================================
 
 
@@ -40,8 +76,17 @@ def main():
     # print(round(f(1e10), 3))
     # print(round(f(-1e10), 3))
     # print(round(f2(1e10), 3))
+    # print(round(f2(2), 3))
 
-    print(round(derivative(sin), 3))
+    # print(list_pull([['one'], [343, 2], [[9, 9, 9], [[666, 666], [[[[42]]]]]]]))
+
+    # l1 = [['one'], [343, 2], [[9, 9, 9], [[666, 666], [[[[42]]]]]]]
+    # l2 = my_deepcopy(l1)
+    # l1[2][0] = 1
+    # print(l1)
+    # print(l2)
+
+    print(verbing('swiming'))
 
 
 if __name__ == '__main__':
