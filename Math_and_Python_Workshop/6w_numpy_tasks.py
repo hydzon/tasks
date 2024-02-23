@@ -215,6 +215,47 @@ def task15(i, z):
 # ============================================     MAIN     ===========================================================
 
 
+def countPalindromicSubsequence(s):
+    """
+    :type s: str
+    :rtype: int
+    """
+    result = set()
+    verified = list()
+    for i in range(len(s) - 2):
+        if s[i] not in verified:
+            for j in range(len(s) - 1, i + 1, -1):
+                if s[i] == s[j]:
+                    for k in range(i + 1, j):
+                        result.add(''.join([s[i], s[k], s[j]]))
+                    break
+            verified.append(s[i])
+    return len(result)
+    # d = {}
+    # for i, c in enumerate(s):
+    #     if c not in d:
+    #         d[c] = [i, i]
+    #     else:
+    #         d[c][1] = i
+    # res = 0
+    # for c, (start_idx, end_idx) in d.items():
+    #     res += len(set(s[start_idx + 1:end_idx]))
+    # return res
+
+
+def isMonotonic(nums):
+    increasing = False
+    decreasing = False
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            increasing = True
+        elif nums[i] < nums[i - 1]:
+            decreasing = True
+        if increasing and decreasing:
+            break
+        return not (increasing and decreasing)
+
+
 # Декоратор для замера времени выполнения функции
 def release_time(foo):
     def wrapper(*args, **kwargs):
@@ -288,7 +329,10 @@ def main():
     # task11(5, 7)
     # task12(5, 5)
     # print(task14(13, 6))
-    print(task15(3, np.array([10, 11, 12, 13, 14, 15])))
+    # print(task15(3, np.array([10, 11, 12, 13, 14, 15])))
+    # print(Solution().isMonotonic([1, 2, 2, 3]))
+    print(countPalindromicSubsequence('bbadcb'))
+
 
 
 if __name__ == '__main__':
