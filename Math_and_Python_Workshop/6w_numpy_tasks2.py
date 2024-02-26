@@ -24,6 +24,7 @@
 import datetime
 from functools import reduce
 import numpy as np
+import pandas as pd
 
 
 # ============================================     tasks 1-5   =========================================================
@@ -56,9 +57,13 @@ def main():
     # task3(5, 4, -5)
     # print(np.fromiter(range(10), dtype='float'))
     # print(np.around(np.linspace(0, 1, 10, endpoint=False), decimals=3)[1:])
-    print(np.geomspace(1, 256, 9))
-
-
+    # print(np.geomspace(1, 256, 9))
+    # np.random.seed(int(input()))
+    # print(np.sort(np.random.random(int(input()))))
+    # print(pd.show_versions())
+    r = range(1, 10)
+    print(r[0])
+    print(r[0])
 
 
 if __name__ == '__main__':
