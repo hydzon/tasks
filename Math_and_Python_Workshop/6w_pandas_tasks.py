@@ -24,11 +24,20 @@ data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat', 'snake', 'cat', '
 
 labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
+critical_age = 3
+
 
 def main():
     df = pd.DataFrame(data, index=labels)
-    # print(df['animal']['e'])
-    df.info()
+    # print(df['animal']['e'])                 #Доступ к данным фрэйма
+    # df.info()                                #DataFrame.info()
+    # print(df.describe()['age']['75%'])       #DataFrame.describe
+    # print(df[:3])                            #Срезы тоже работают
+    # print(df.iloc[[0, 2, 3]])                # Доступ к строкам по индексам,еще можно использовать использовать loc()
+    # print(df[['animal', 'age']])                      # Доступ к столбцам по имненам
+    # print(df[['animal', 'age']].iloc[[0, 2, 3]])      # Вывод по названию столбцов и инндексам строк
+    # print(df[df['age'] > critical_age])               # Применение фильтра
+    # print(df[df['age'].isnull()])                     # Фильтр по незаполненым ячейкам
 
 
 if __name__ == '__main__':
