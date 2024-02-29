@@ -17,7 +17,7 @@ def task1(df):
 
 
 data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat', 'snake', 'cat', 'dog', 'dog'],
-        'age': [2.5, 3, 0.5, np.nan, 5, 2, 4.5, np.nan, 7, 3],
+        'age': [2, 3, 0.5, np.nan, 5, 2, 4.5, np.nan, 2, 3],
         'visits': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
         'priority': ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'yes', 'no', 'no']}
 
@@ -78,6 +78,17 @@ def main():
     # df = df.drop(del_index)
     # df.loc[new_index] = new_data
     # print(df)
+
+    # Количество записей каждого типа, сгруппированным по значению в колонке
+    # print(df['animal'].value_counts())
+
+    # Cортирует сперва по уменьшению 1 поля из списка by, а при равенстве значений по увеличению 2.
+    # print(df.sort_values(by=['animal', 'visits'], ascending=[False, True]))
+
+    # Замена значений в столбце
+    # df.priority = df.priority.map({'yes': True, 'no': False, 1: True, 0: False})
+    # и еще одна замена
+    # df['animal'] = df['animal'].replace('snake', 'python')
 
 
 if __name__ == '__main__':
