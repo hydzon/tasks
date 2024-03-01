@@ -12,6 +12,11 @@ import pandas as pd
 def task1(df):
     return df.age.sum()
 
+def test_mem(s, b):
+    s.append(23)
+    b = s
+    print(s, b)
+
 
 # ============================================     MAIN     ===========================================================
 
@@ -89,6 +94,37 @@ def main():
     # df.priority = df.priority.map({'yes': True, 'no': False, 1: True, 0: False})
     # и еще одна замена
     # df['animal'] = df['animal'].replace('snake', 'python')
+
+    # Товаров какого цвета больше всего на складе?
+    # temp_df = pd.read_csv('torg.csv', sep=';')
+    # print(temp_df.groupby('IP_PROP30').CP_QUANTITY.sum())
+
+    # Отсортируйте размеры по увеличению остатков на складе.
+    # temp_df = pd.read_csv('torg.csv', sep=';')
+    # print(temp_df.groupby('IP_PROP32').CP_QUANTITY.sum().sort_values())
+
+    # Найдите суммарную стоимость всех розовых (pink) вещей большого размера (XL).
+    # temp_df = pd.read_csv('dataset_345422_8.txt', sep=';')
+    # temp_df = temp_df[(temp_df['IP_PROP30'] == 'pink') & (temp_df['IP_PROP32'] == 'XL')]
+    # print((temp_df.CP_QUANTITY * temp_df.CR_PRICE_1_USD).sum())
+
+    # Максимальное медианное значение оценки по чтению у групп, разделенных по признаку "пол абитуриента" и "национальность"
+    # temp_df = pd.read_csv('StudentsPerformance.csv', sep=',')
+    # print(temp_df.groupby(['gender', 'race/ethnicity'])["reading score"].median())
+
+    #Какое среднее значение оценок по всем предметам у мальчиков из такой же группы с уровнем образования как у
+    # родителей девочек, получивших максимальную среднюю оценку по всем предметам?
+    # temp_df = pd.read_csv('StudentsPerformance.csv', sep=',')
+    # gr = temp_df.groupby([
+    #     'gender',
+    #     'parental level of education'
+    # ])[['math score', 'reading score', 'writing score']].mean().mean(axis=1)
+    # print(gr.loc['male', gr.loc['female'].idxmax()])
+    # print(dict(gr))
+
+
+
+
 
 
 if __name__ == '__main__':
