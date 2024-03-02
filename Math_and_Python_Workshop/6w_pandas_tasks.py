@@ -5,12 +5,14 @@
 
 import numpy as np
 import pandas as pd
+from datetime import datetime
 
 
 # ============================================     tasks 1-5   =========================================================
 
 def task1(df):
     return df.age.sum()
+
 
 def test_mem(s, b):
     s.append(23)
@@ -123,6 +125,28 @@ def main():
     # print(dict(gr))
 
 
+    # # Посчитайте среднюю посещаемость каждой велодорожки отдельно по дням недели.
+    # # Какой день недели (в среднем) наиболее посещаем?
+    # days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    # temp_df = pd.read_csv('dataset_345422_14 (1).txt', sep=',')
+    # temp_df.Date = pd.to_datetime(temp_df['Date']).map(lambda x: x.weekday())
+    # max_ = temp_df.groupby('Date').mean()
+    # print(days[max_[max_.max().idxmax()].idxmax()])
+
+    # # Посчитайте среднюю и медианную зарплату "Wage" футболистов из разных клубов "Club".
+    # # В скольких клубах средняя и медианная зарплаты совпадают?
+    # temp_df = pd.read_csv('football_players.csv', sep=',')
+    # print((temp_df.groupby('Club').median('Wage')['Wage'] == temp_df.groupby('Club').mean('Wage')['Wage']).sum())
+    # # или так
+    # print(temp_df.groupby('Club')['Wage'].agg(lambda x: 1 if (x.mean() == x.median()) else 0).sum())
+
+    # # Посчитайте количество организаций (CompanyID), у которых суммарный объем файлов (FileSize)
+    # # хотя бы одного проекта (ProjectID) превышает средний объем файлов по всем проектам.
+    # temp_df = pd.read_csv('dataset_file_storage.csv', sep=';')
+    # mean_by_all_projects = temp_df.groupby(['ProjectID'])['FileSize'].sum().mean()
+    # mean_by_project_by_company = temp_df.groupby(['CompanyID', 'ProjectID'])['FileSize'].sum()
+    # s = mean_by_project_by_company[mean_by_project_by_company > mean_by_all_projects]
+    # print(s.groupby('CompanyID').count().count())
 
 
 
