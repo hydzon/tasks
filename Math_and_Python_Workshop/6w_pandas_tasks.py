@@ -148,7 +148,17 @@ def main():
     # s = mean_by_project_by_company[mean_by_project_by_company > mean_by_all_projects]
     # print(s.groupby('CompanyID').count().count())
 
+    # # На какую сумму купили и оплатили носков любых видов (как мужских, так и женских)?
+    # orders = pd.read_csv('orders.csv', sep=';')
+    # products = pd.read_csv('Products.csv', sep=';')
+    # products = products[products.Name.map(lambda x: x.startswith('Носки') > 0)]
+    # socks = pd.merge(orders, products, how='inner', left_on='ID товара', right_on='Product_ID')
+    # socks = socks[socks['Оплачен'] == 'Да']
+    # print(sum(socks['Количество'] * socks['Price']))
 
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.max_colwidth', None)
 
 
 if __name__ == '__main__':
