@@ -11,10 +11,10 @@ import re
 from scipy.spatial.distance import cosine
 
 
-def formating_text(file_name):
+def formating_text(a, b):
     list_words = []
     list_strings = []
-    with open(file_name, 'r') as file:
+    with open('text.txt', 'r') as file:
         for string in file.readlines():
             tmp_string = [el for el in re.split('[^a-z0-9]', string.lower()) if el]
             list_strings.append(tmp_string)
@@ -32,7 +32,7 @@ def formating_text(file_name):
         for j in range(len(list_strings[i])):
             objects_and_attributes[i, dict_words[list_strings[i][j]]] += 1
 
-    return objects_and_attributes
+    return cosine(objects_and_attributes[a], objects_and_attributes[b])
 
 
 # ============================================     MAIN     ===========================================================
@@ -63,7 +63,7 @@ def main():
     # # [tmp.extend(el) for el in strings_with_text]
     # print(sum(strings_with_text, []))
 
-    print(cosine(formating_text('text.txt'), formating_text('text2.txt')))
+    print(formating_text(0, 4))
 
 
 if __name__ == '__main__':
