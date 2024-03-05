@@ -41,11 +41,21 @@ def task1():
     fig.tight_layout()
     fig.show()
 
+    x = np.arange(0.1, 5, 0.1)
+    fig, axis = plt.subplots(figsize=(8, 10))
+    axis.plot(x, f(x), x, g(x))
+    axis.plot(x, h(x))
+    axis.legend(['F(x)', 'G(x)', 'H(x)'])
+    fig.show()
+
 
 # ============================================     MAIN     ===========================================================
 
-def f(x):
-    return x ** 2
+def f(x, a, b):
+    try:
+        return (x ** b + a ** b) / x ** b
+    except Exception:
+        print('ops')
 
 
 def g(x):
@@ -58,11 +68,20 @@ def h(x):
 
 def main():
 
-
-
-
-
-
+    xm = np.arange(-5, -0.01, 0.1)
+    xb = np.arange(0.01, 5, 0.1)
+    x = np.arange(-5, 5, 0.05).round(3)
+    fig, axis = plt.subplots(figsize=(8, 8))
+    axis.plot(x, f(x, 1, 1), 'r')
+    axis.plot(x, f(x, 2, 1), 'b')
+    axis.plot(x, f(x, 1, 2), 'g')
+    axis.legend(['α=1,β=1', 'α=2,β=1', 'α=1,β=2'])
+    axis.set_ylim([-30, 30])
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.title('$f(x) = (x^a + a^b) / x^b$')
+    fig.tight_layout()
+    fig.show()
 
 
 if __name__ == '__main__':
