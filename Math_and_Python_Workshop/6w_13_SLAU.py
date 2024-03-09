@@ -7,11 +7,10 @@
 """
 
 import numpy as np
-from sys import stdin
 import pandas as pd
 import matplotlib.pyplot as plt
-import re
-from scipy.spatial.distance import cosine
+from scipy.optimize import golden
+
 
 
 def slau_solution():
@@ -45,6 +44,17 @@ def slau_solution2(m, tuple_p):
 def f(x, c):
     return c[0] + sum([c[i] * x**i for i in range(1, len(c))])
 
+
+a = 3
+b = 4
+def f2(x):
+    return (x + a) ** 2 - b
+
+
+def g(x):
+    return abs(f2(x))
+
+
 # ============================================     MAIN     ===========================================================
 
 
@@ -55,16 +65,24 @@ def main():
     # m2 = np.append(m2, [list(map(int, '0 0 1 0 1'.split()))], axis=0)
     # m2 = np.concatenate((m2, [list(map(int, '0 0 1 0 1'.split()))]))
     # print(m2[:, :-1])
+    #
+    # c = slau_solution2(6, ((0, 1), (1, 1), (2, 25), (-1, 1), (-2, -23), (0.5, 0.90625)))
+    #
+    # x = np.arange(-1.3, 0.7, 0.01)  # Массив значений аргумента
+    # plt.plot(x, f(x, c))  # Построение графика
+    # plt.xlabel(r'$x$')
+    # plt.ylabel(r'$f(x)$')
+    # plt.grid(True)
+    # plt.show()
 
-    c = slau_solution2(6, ((0, 1), (1, 1), (2, 25), (-1, 1), (-2, -23), (0.5, 0.90625)))
+    # Поиск минимума функции с помощью scipy.optimize.golden()
+    # print(golden(g))
 
-    x = np.arange(-1.3, 0.7, 0.01)  # Массив значений аргумента
-    plt.plot(x, f(x, c))  # Построение графика
-    plt.xlabel(r'$x$')
-    plt.ylabel(r'$f(x)$')
-    plt.grid(True)
-    plt.show()
+    # print(golden(f2, brack=(-10, -4), full_output=True)[1], golden(g, brack=(-10, -4), full_output=True)[1])
 
+    s = input()[1:-1].split(', ')
+    L = [el.strip('\'') for el in s]
+    print(L)
 
 if __name__ == '__main__':
     main()
