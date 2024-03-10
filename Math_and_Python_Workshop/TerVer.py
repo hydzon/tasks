@@ -40,4 +40,22 @@ import random
 # print(f'{round(s/c * 100, 1)} %')
 
 
+# В трамвайном парке имеются N трамваев маршрута №1 и M трамваев маршрута №2.
+# Какова вероятность того, что K-м по счету на линию выйдет трамвай маршрута №1?
+
+n, m, k = 15, 10, 3
+c = 1000000
+pr = 0
+for _ in range(c):
+    tmp_n = n
+    tmp_m = m
+    for _ in range(k - 1):
+        if random.randint(1, tmp_n + tmp_m) <= tmp_n:
+            tmp_n -= 1
+        else:
+            tmp_m -= 1
+    if random.randint(1, tmp_n + tmp_m) <= tmp_n:
+        pr += 1
+print(f'{round(pr/c * 100, 1)} %')
+
 
