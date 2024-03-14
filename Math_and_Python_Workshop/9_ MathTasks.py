@@ -13,6 +13,11 @@
 import numpy as np
 import requests
 import os
+import json
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # ============================================     tasks 1-5   =========================================================
 
@@ -57,8 +62,37 @@ def main():
     # else:
     #     print(f'Упс, произошла ошибка!..\nКод ошибки - {resp.status_code}')
 
+    # print(dir(os.path))
 
-    print(dir(os.path))
+    # url = 'https://oeis.org/search'
+    # params = {
+    #     'q': 631764,
+    #     # 'q': 1234567890123456789,
+    #     'fmt': 'json'
+    # }
+    # resp = requests.get(url, params=params)
+    # if resp.status_code == 200:
+    #     data = resp.json()
+    #     count = data['count']
+    #     if count == 0:
+    #         print('No result')
+    #     else:
+    #         print(f'\nНайдено {count} последовательностей:\n')
+    #         for i in range(len(data['results'])):
+    #             print('    {}) № {} - http://oeis.org/A{}'.format(i+1,
+    #                                                               data['results'][i]['number'],
+    #                                                               data['results'][i]['number']))
+    #             print('    Name: {}'.format(data['results'][i]['name']))
+    #             print('    Data: {}'.format(data['results'][i]['data']) + '\n')
+    #
+    #         # json_str = json.dumps(data, indent=4)
+    #         # print(json_str)
+    # else:
+    #     print(f'Ошибка - {resp.status_code}')
+
+    sns.set()
+    df = pd.read_csv('tips.csv')
+    sns.pairplot(df)
 
 
 if __name__ == '__main__':
