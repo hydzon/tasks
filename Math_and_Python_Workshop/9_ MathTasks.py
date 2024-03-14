@@ -90,10 +90,20 @@ def main():
     # else:
     #     print(f'Ошибка - {resp.status_code}')
 
-    sns.set()
-    df = pd.read_csv('tips.csv')
-    sns.pairplot(df)
+    # sns.set()
+    # df = pd.read_csv('tips.csv')
+    # # sns.swarmplot(x='size', hue='sex', data=df)
+    # # sns.countplot(x='day', hue='time', data=df)
+    # sns.countplot(x='size', hue='sex', data=df)
+    # plt.show()
 
+    # sns.set()
+    # df = pd.read_csv('titanic.csv')
+    # # sns.countplot(x='deck', hue='sex', data=df)
+    # sns.countplot(x='deck', hue='class', data=df)
+    # plt.show()
+
+    task1('https:')
 
 if __name__ == '__main__':
     main()
