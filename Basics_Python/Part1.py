@@ -24,7 +24,17 @@
 
 6) Реализуйте класс Buffer, который будет накапливать в себе элементы последовательности и выводить
 сумму пятерок последовательных элементов по мере их накопления.
+
+7) Промоделировать процесс наследования классов, и понять существует ли путь от одного класса до другого.
+<имя класса 1> : <имя класса 2> <имя класса 3> ... <имя класса k>
+Это означает, что класс 1 отнаследован от класса 2, класса 3, и т. д.
+Гарантируется, что класс не наследуется сам от себя (прямо или косвенно),
+что класс не наследуется явно от одного класса более одного раза.
+
+Необходимо отвечать на запросы, является ли один класс предком другого класса.
+
 """
+
 
 # ============================================     tasks 1-5   =========================================================
 
@@ -98,6 +108,8 @@ def task5():
         print(name_space[get_stack[i][0]].get_variables(get_stack[i][1]))
 
 
+
+
 # ============================================     tasks 6-10   ========================================================
 
 
@@ -121,6 +133,41 @@ class Buffer:
         return self.buffer
 
 
+classes = dict()
+
+
+def parentage_check(parent, child):
+    if classes[child] is None:
+        return False
+    elif parent in classes[child]:
+        return True
+    else:
+        for i in range(len(classes[child])):
+            if parentage_check(parent, classes[child][i]):
+                return True
+    return False
+
+
+def task7():
+    with (open('classes.txt', 'r')) as f:
+        n = int(f.readline())
+
+        for _ in range(n):
+            new_class = f.readline().split()
+            if len(new_class) > 1:
+                classes[new_class[0]] = new_class[2:]
+            else:
+                classes[new_class[0]] = None
+
+        n = int(f.readline())
+        for _ in range(n):
+            parent, child = f.readline().split()
+            if parent == child:
+                print(f'{parent} -> {child} : Yes')
+            else:
+                print(f'{parent} -> {child} : Yes') if parentage_check(parent, child) else print(f'{parent} -> {child} : No')
+
+
 # ============================================     MAIN     ===========================================================
 
 
@@ -131,18 +178,18 @@ def main():
     # print(task3(123))
     # print(task4(10, 5))
 
-    task5()
-    """
-    add global a
-    create foo global
-    add foo b
-    get foo a
-    get foo c
-    create bar foo
-    add bar a
-    get bar a
-    get bar b
-    """
+    # task5()
+    # """
+    # add global a
+    # create foo global
+    # add foo b
+    # get foo a
+    # get foo c
+    # create bar foo
+    # add bar a
+    # get bar a
+    # get bar b
+    # """
 
     # buf = Buffer()
     # buf.add(1, 2, 3)
@@ -153,6 +200,20 @@ def main():
     # print(buf.get_current_part())  # вернуть []
     # buf.add(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)  # print(5), print(5) – вывод сумм третьей и четвертой пятерки
     # print(buf.get_current_part())  # вернуть [1]
+
+    # class A:
+    #     pass
+    # class B(A):
+    #     pass
+    # class C:
+    #     pass
+    # class D(C):
+    #     pass
+    # class E(B, C, D):
+    #     pass
+    # print(E.mro()) #Ошибка, порядок C и D при определении класса E противоречит наследственности
+
+    task7()
 
 
 if __name__ == '__main__':
