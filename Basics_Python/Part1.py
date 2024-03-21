@@ -21,7 +21,6 @@
 
 Для каждого запроса get выведите в отдельной строке его результат.
 
-
 6) Реализуйте класс Buffer, который будет накапливать в себе элементы последовательности и выводить
 сумму пятерок последовательных элементов по мере их накопления.
 
@@ -33,11 +32,20 @@
 
 Необходимо отвечать на запросы, является ли один класс предком другого класса.
 
-
 8) Реализуйте структуру данных, представляющую собой расширенную структуру стек.
 Необходимо поддерживать добавление элемента на вершину стека, удаление с вершины стека,
 и необходимо поддерживать операции сложения, вычитания, умножения и целочисленного деления.
 
+9) Напишите программу, которая будет определять обработку каких исключений можно удалить из кода.
+Промоделировать этот процесс, и понять какие из исключений можно и не ловить,
+потому что мы уже ранее где-то поймали их предка.
+
+10) Реализуйте класс PositiveList, отнаследовав его от класса list, для хранения положительных целых чисел.
+Также реализуйте новое исключение NonPositiveError.
+
+В классе PositiveList переопределите метод append(self, x) таким образом, чтобы при попытке добавить неположительное
+целое число бросалось исключение NonPositiveError и число не добавлялось, а при попытке добавить положительное
+целое число, число добавлялось бы как в стандартный list.
 
 """
 
@@ -204,10 +212,61 @@ class LoggableList(list, Loggable):
         self.log(__object)
 
 
+excps = dict()
+
+
+def exps_parentage_check(parent, child):
+    if excps[child] is None:
+        return False
+    elif parent in excps[child]:
+        return True
+    else:
+        for i in range(len(excps[child])):
+            if exps_parentage_check(parent, excps[child][i]):
+                return True
+    return False
+
+
+def task9():
+    with (open('excps.txt', 'r')) as f:
+        n = int(f.readline())
+        for _ in range(n):
+            new_excp = f.readline().split()
+            if len(new_excp) > 1:
+                excps[new_excp[0]] = new_excp[2:]
+            else:
+                excps[new_excp[0]] = None
+
+        n = int(f.readline())
+        stack = [f.readline().split()[0]]
+        for i in range(1, n):
+            stack.append(f.readline().split()[0])
+            for j in range(i):
+                if exps_parentage_check(stack[j], stack[i]):
+                    print(stack[i])
+                    break
+
+
+class NonPositiveError(Exception):
+    pass
+
+
+class PositiveList(list):
+    def append(self, x):
+        if x > 0:
+            super(PositiveList, self).append(x)
+        else:
+            raise NonPositiveError()
+
+
 # ============================================     MAIN     ===========================================================
 
 
 def main():
+    pl = PositiveList()
+    pl.append(1)
+    pl.append(-2)
+
     # print(Counter([1, 2, 1, 2, 3, True, 'wef']))
     # assert task2([1, 2, 1, 2, 3]) == 3
     # assert task2([1, 2, 1, 2, 3, True]) == 4
@@ -251,9 +310,10 @@ def main():
 
     # task7()
 
-    ls = LoggableList()
-    ls.append((1, 2, 3))
-    print(ls)
+    # ls = LoggableList()
+    # ls.append((1, 2, 3))
+    # print(ls)
+
 
 
 if __name__ == '__main__':
