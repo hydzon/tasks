@@ -15,12 +15,19 @@
 4) Реализуйте функцию-генератор primes, которая будет генерировать простые числа
 в порядке возрастания, начиная с числа 2.
 
+5) Вам дается текстовый файл, содержащий некоторое количество непустых строк.
+На основе него сгенерируйте новый текстовый файл, содержащий те же строки в обратном порядке.
+
+6) Необходимо распаковать архив main.zip, и затем найти в данной файловой структуре все директории,
+в которых есть хотя бы один файл с расширением ".py".
+
 """
 
 import datetime
 import itertools
 import math
-
+import os
+import zipfile
 from simplecrypt import encrypt, decrypt
 from collections import Counter
 
@@ -76,7 +83,7 @@ class MultiFilter:
                 yield el
 
 
-# ============================================     tasks   =========================================================
+# ============================================     tasks 4-10  =========================================================
 
 def primes():
     prime = 2
@@ -89,6 +96,21 @@ def primes():
         if is_prime:
             yield prime
         prime += 1
+
+
+def task5():
+    with open('dataset_24465_4.txt', 'r') as f:
+        with open('new_dataset_24465_4.txt', 'w') as new_f:
+            new_f.writelines('\n'.join([line.rstrip() for line in f][::-1]))
+
+
+def task6():
+    with zipfile.ZipFile(os.getcwd() + '/main.zip', 'r') as zip_ref:
+        zip_ref.extractall(os.getcwd())
+    with open('res.txt', 'w') as f:
+        for cur_dir, dirs, files in os.walk('main'):
+            if any([filename.endswith('.py') for filename in files]):
+                f.writelines(cur_dir + '\n')
 
 
 # ============================================     MAIN     ===========================================================
@@ -111,7 +133,9 @@ def main():
     # a = [i for i in range(31)]
     # print(list(MultiFilter(a, mul2, mul3, mul5, judge=MultiFilter.judge_half)))
 
-    print(list(itertools.takewhile(lambda x: x <= 100, primes())))
+    # print(list(itertools.takewhile(lambda x: x <= 100, primes())))
+    # task5()
+    task6()
 
 
 if __name__ == '__main__':
