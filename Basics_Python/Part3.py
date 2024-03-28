@@ -30,7 +30,8 @@
 
 import sys
 import re
-
+import requests
+import json
 
 # ============================================     tasks 1-2   =========================================================
 
@@ -122,7 +123,32 @@ def main():
     # task5()
     # print(re.match(r'\bcat\b', 'cat cat cat'))
 
-    task8()
+    # task8()
+
+    '''
+        На вход подаются две строки, содержащие url двух документов A и B.
+        Выведите Yes, если из A в B можно перейти за два перехода, иначе выведите No.
+    '''
+
+    # a = 'https://stepik.org/media/attachments/lesson/24472/sample0.html'
+    # b = 'https://stepik.org/media/attachments/lesson/24472/sample2.html'
+    # res = requests.get(a)
+    # c = re.findall(r'<a href="(.+)">', res.text)[0]
+    # res = requests.get(c)
+    # c = re.findall(r'<a href="(.+)">', res.text)[0]
+    # c = c.replace('stepic.org', 'stepik.org')
+    # print('Yes') if b == c else print('No')
+
+
+    '''
+        На вход подается ссылка на HTML файл.
+        Вам необходимо скачать этот файл, затем найти в нем все ссылки 
+        вида <a ... href="..." ... > и вывести список сайтов, на которые есть ссылка.   
+    '''
+
+    # req = requests.get(input())
+    # links = re.findall(r'<a href="(.+)">', req.text)
+
 
 
 if __name__ == '__main__':
