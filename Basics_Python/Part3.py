@@ -27,6 +27,7 @@
 9) Вам дана последовательность строк.
 Выведите строки, содержащие двоичную запись числа, кратного 3, не используя приведение к числу.
 """
+
 import csv
 import sys
 import re
@@ -35,6 +36,7 @@ import json
 import numpy as np
 import pandas as pd
 import datetime
+import json
 
 # ============================================     tasks 1-2   =========================================================
 
@@ -112,6 +114,18 @@ def task8():
 # ============================================     MAIN     ===========================================================
 
 
+def parentage_check(classes, parent, child):
+    if classes[child] is None:
+        return False
+    elif parent in classes[child]:
+        return True
+    else:
+        for i in range(len(classes[child])):
+            if parentage_check(classes, parent, classes[child][i]):
+                return True
+    return False
+
+
 def main():
     # print(__doc__)
     # s, a, b = input(), input(), input()
@@ -178,6 +192,24 @@ def main():
     # temp_df = temp_df[(temp_df.Date >= pd.Timestamp('01-01-2015')) & (temp_df.Date <= pd.Timestamp('01-01-2016'))]
     # print(temp_df.groupby('Primary Type')['Primary Type'].count().idxmax())
 
+
+    """
+        Вам дано описание наследования классов в формате JSON.
+        Для каждого класса вычислите предком скольких классов он является и выведите эту информацию в следующем формате.
+        <имя класса> : <количество потомков>
+        Выводить классы следует в лексикографическом порядке.
+    """
+    # text = ('[{"name": "B", "parents": ["A", "C"]}, {"name": "C", "parents": ["A"]}, {"name": "A", "parents": []}, '
+    #         '{"name": "D", "parents":["C", "F"]}, {"name": "E", "parents":["D"]}, {"name": "F", "parents":[]}]')
+    # dict_obj = {el['name']: el['parents'] for el in json.loads(text)}
+    # res = dict()
+    # for el in sorted(dict_obj):
+    #     res[el] = 1
+    #     for sub_el in dict_obj:
+    #         if parentage_check(dict_obj, el, sub_el):
+    #             res[el] += 1
+    # for key, value in sorted(res.items()):
+    #     print(f'{key} : {value}')
 
 
 
