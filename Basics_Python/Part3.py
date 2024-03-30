@@ -27,11 +27,14 @@
 9) Вам дана последовательность строк.
 Выведите строки, содержащие двоичную запись числа, кратного 3, не используя приведение к числу.
 """
-
+import csv
 import sys
 import re
 import requests
 import json
+import numpy as np
+import pandas as pd
+import datetime
 
 # ============================================     tasks 1-2   =========================================================
 
@@ -148,26 +151,35 @@ def main():
 
     # req = requests.get(input())
     # links = re.findall(r'<a href="(.+)">', req.text)
-    text = '''
-        <a href="https://stepik.org/media/attachments/lesson/24472/sample1.html">1</a>
-        <a href="http://stepik.org/courses">
-        <a href='https://stepik.org'>
-        <a href='http://neerc.ifmo.ru:1345'>
-        <a href= "ftp://mail.ru/distib" >
-        <a href="ya.ru">
-        <a href="www.ya.ru">
-        <a href="../skip_relative_links">
-        <a href="../some_path/index.html">
-        <a href="sas-_0123d.ifmo.ru">
-        <a target='_top' href="http://redir.rbc.ru/cgi-bin/redirect.cgi?http://hc.ru/ru/">
-    '''
-    # req = requests.get(input().replace('stepic.org', 'stepik.org'))
-    l_set = set(re.findall(r'(?:<a[ ]*href[ ]*=[ ]*["\'].*?[/]?)((?:\w+)(?:[.]\w+){1,})', text))
-    print(*sorted((list(l_set))), sep='\n')
+    # text = '''
+    #     <a href="https://stepik.org/media/attachments/lesson/24472/sample1.html">1</a>
+    #     <a href="http://stepik.org/courses">
+    #     <a href='https://stepik.org'>
+    #     <a href='http://neerc.ifmo.ru:1345'>
+    #     <a href= "ftp://mail.ru/distib" >
+    #     <a href="ya.ru">
+    #     <a href="www.ya.ru">
+    #     <a href="../skip_relative_links">
+    #     <a href="../some_path/index.html">
+    #     <a href="sas-_0123d.ifmo.ru">
+    #     <a target='_top' href="http://redir.rbc.ru/cgi-bin/redirect.cgi?http://hc.ru/ru/">
+    # '''
+    # # req = requests.get(input().replace('stepic.org', 'stepik.org'))
+    # l_set = set(re.findall(r'(?:<a[ ]*href[ ]*=[ ]*["\'].*?)((?:\w+)(?:[.]\w+){1,})', text))
+    # print(*sorted((list(l_set))), sep='\n')
 
     # req = requests.get('http://pastebin.com/raw/7543p0ns')
     # print(req)
     # # print(*re.findall(r'(?:\w+)(?:[.]\w+){1,}', text), sep='\n')
+
+    # # Вам необходимо узнать тип преступления, которое было зафиксировано максимальное число раз в 2015 году.
+    # temp_df = pd.read_csv('Crimes.csv', sep=',')
+    # temp_df['Date'] = pd.to_datetime(temp_df['Date'])
+    # temp_df = temp_df[(temp_df.Date >= pd.Timestamp('01-01-2015')) & (temp_df.Date <= pd.Timestamp('01-01-2016'))]
+    # print(temp_df.groupby('Primary Type')['Primary Type'].count().idxmax())
+
+
+
 
 
 if __name__ == '__main__':
