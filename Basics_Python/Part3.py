@@ -211,7 +211,62 @@ def main():
     # for key, value in sorted(res.items()):
     #     print(f'{key} : {value}')
 
+    """
+        Получить данные о погоде через API с сайта openweathermap.org            
+    """
 
+    # api_url = 'https://api.openweathermap.org/data/2.5/weather'
+    # params = {
+    #     'id': '2025339',                                    # City ID
+    #     'appid': '8358868cc2bddccd3299ff652bd01e2a',        # Key
+    #     'lang': 'ru',                                       # Lang
+    #     'units': 'metric'                                   # Units of measurement
+    # }
+    # response = requests.get(api_url, params=params)
+    # print(response.json()['main']['temp'])
+
+    """     
+        С помошью API сайта numbersapi.com,  
+        необходимо узнать, существует ли интересный математический факт о числе.        
+        Для каждого числа выведите Interesting, если для числа существует интересный факт, и Boring иначе.
+    """
+
+    # api_url = 'http://numbersapi.com'
+    # params = {
+    #     'json': 'true'
+    # }
+    #
+    # num = input()
+    # while num:
+    #     response = requests.get(api_url + f'/{num}/math', params=params)
+    #     data = response.json()
+    #     print('Interesting') if data['found'] else print('Boring')
+    #     print(data['text'])
+    #     num = input()
+
+    '''
+        В этой задаче вам необходимо воспользоваться API сайта artsy.net    
+        Вам даны идентификаторы художников в базе Artsy.
+        Для каждого идентификатора получите информацию о имени художника и годе рождения.
+        Выведите имена художников в порядке неубывания года рождения. В случае если у художников 
+        одинаковый год рождения, выведите их имена в лексикографическом порядке.
+    '''
+
+    # with open('token_Artsy', 'r') as t:
+    #     headers = {"X-Xapp-Token": t.readline()}
+    # list_arts = []
+    # read = input()
+    # while read:
+    #     r = requests.get("https://api.artsy.net/api/artists/" + read,
+    #                   headers=headers)
+    #     r.encoding = 'utf-8'
+    #     list_arts.append([json.loads(r.text)['sortable_name'], json.loads(r.text)['birthday']])
+    #     read = input()
+    # list_arts = pd.DataFrame(list_arts, columns=['artist', 'birthday'])
+    # # print(list_arts)
+    # list_arts = list_arts.sort_values(by=['birthday', 'artist'])
+    # print(list_arts)
+    # print(*list_arts['artist'].tolist(), sep='\n')
 
 
 if __name__ == '__main__':
