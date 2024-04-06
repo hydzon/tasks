@@ -32,6 +32,7 @@ if len(n1) > len(n2):
             sum = int(n1[-i]) + int(n2[-i]) + perenos
             perenos = sum // 10
         else:
+            ...
 
         if i < len(n1):
             i += 1
